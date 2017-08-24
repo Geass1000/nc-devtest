@@ -6,4 +6,4 @@ import { config } from './app.config';
 
 logger.info(config.mysql.host, config.mysql.port, config.mysql.user, config.mysql.password, config.mysql.database);
 
-export const pool : Pool = createPool(<PoolOptions>config.mysql);
+export const mysqlPool : Pool = createPool(<PoolOptions>config.mysql);
