@@ -4,6 +4,7 @@ import { PoolConnection } from 'mysql2/promise';
 import { mysqlPool } from '../config/mysql.database';
 import { logger } from '../config/logger.config';
 
+import { IUser } from '../interfaces/user.interface';
 export class UserModel {
 	constructor (private pool : Pool) {
 	}
