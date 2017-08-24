@@ -22,7 +22,31 @@ export class UserModel {
 			});
 	}
 
-	updateUser (firstName : string) {
+	generatePDF (user : IUser) : Promise<Buffer> {
+		return new Promise((resolve, reject) => {
+			const doc : PDFKit.PDFDocument = new PDFDocument();
+
+			let body : string = '';
+			doc.on('data', (chunk) => {
+				body += chunk.toString();
+			});
+			doc.on('end', () => {
+				const buff : Buffer = Buffer.from(body);
+				resolve(buff);
+			});
+			doc.on('error', (error : Error) => {
+				logger.error(`${error.name} - ${error.message}`);
+				reject(error);
+			});
+
+			doc.text(`First Name: ${user.firstName}`);
+			doc.text(`Last Name: ${user.lastName}`);
+			doc.end();
+		});
+	}
+
+	updateUser (firstName : string) : Promise<any> {
 		/* `UPDATE user SET  WHERE firstName = '${firstName}'` */
+		return Promise.resolve(null);
 	}
 }
