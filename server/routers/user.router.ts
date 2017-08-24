@@ -9,4 +9,4 @@ router.route('/users/:first_name')
 
 //... other paths
 
-module.exports = router;
+export { router };
