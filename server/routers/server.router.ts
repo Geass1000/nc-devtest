@@ -1,12 +1,11 @@
 import * as express from 'express';
+import { Router as userRouter } from './user.router';
 
 const router : express.Router = express.Router();
 
 //... other routers
 
-/*
- * API paths
- */
+router.use('/', userRouter);
 
 //... other paths
 
