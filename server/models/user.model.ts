@@ -1,15 +1,16 @@
-import { pool } from '../config/mysql.database';
+import { Pool } from 'mysql2/promise';
 import { PoolConnection } from 'mysql2/promise';
 
+import { mysqlPool } from '../config/mysql.database';
 import { logger } from '../config/logger.config';
 
 export class UserModel {
-	constructor () {
+	constructor (private pool : Pool) {
 	}
 
-	findUser (firstName : string) {
+	findUser (firstName : string) : Promise<any> {
 		let poolConn : PoolConnection;
-		return pool.getConnection()
+		return this.pool.getConnection()
 			.then((conn) => {
 				logger.info(`${this.constructor.name} - findUser:`, 'Phase 1');
 				poolConn = conn;
@@ -18,7 +19,7 @@ export class UserModel {
 			.then((result) => {
 				logger.info(`${this.constructor.name} - findUser:`, 'Phase 2');
 				poolConn.release();
-				return result[0];
+				return result[0][0];
 			});
 	}
 
