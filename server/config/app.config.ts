@@ -2,13 +2,16 @@ import * as dotenv from 'dotenv';
 
 /* Classes and Interfaces */
 import { logger } from '../config/logger.config';
+
 import { IAppConfig } from '../interfaces/app.config.interface';
+import { Helper } from '../lib/helper.class';
 
 const config : IAppConfig = {};
 
 if (process.env.NODE_ENV !== 'production') {
-	dotenv.config({ path: __dirname + '/../../.env' });
-	logger.info(`${__dirname}/../../.env`);
+	const pathEnv : string = `${__dirname}/../../../.env`;
+	dotenv.config({ path: pathEnv });
+	logger.info(`Path to .env file: ${pathEnv}`);
 	config.env = 'development';
 } else {
 	config.env = 'production';
