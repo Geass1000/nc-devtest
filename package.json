@@ -26,6 +26,7 @@
     "express": "^4.15.4",
     "method-override": "^2.3.9",
     "morgan": "^1.8.2",
+    "mysql2": "^1.4.1",
     "winston": "^2.3.1"
   },
   "devDependencies": {
@@ -38,6 +39,7 @@
     "@types/jasminewd2": "~2.0.2",
     "@types/method-override": "0.0.29",
     "@types/morgan": "^1.7.32",
+    "@types/mysql2": "github:types/mysql2",
     "@types/node": "~8.0.22",
     "@types/winston": "^2.3.4",
     "concurrently": "^3.5.0",
