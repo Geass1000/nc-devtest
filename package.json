@@ -5,14 +5,14 @@
   "scripts": {
     "start": "node dist/server/index.js",
     "build:client": "",
-    "build:server": "tsc -p server",
+    "build:server": "tsc -p \"./server/tsconfig.json\"",
     "build": "npm run build:client && npm run build:server",
     "test": "ng test --sourcemaps=false",
     "lint:client": "",
-    "lint:server": "tslint --type-check --project \"./server/tsconfig.json\" \"server/**/*.ts\"",
+    "lint:server": "tslint --type-check -p \"./server/tsconfig.json\" \"server/**/*.ts\"",
     "lint": "npm run lint:client && npm run lint:server",
     "dev:client": "",
-    "dev:server": "npm run build:server && concurrently \"tsc -w -p server\" \"nodemon dist/server/index.js\"",
+    "dev:server": "npm run build:server && concurrently \"tsc -w -p \"./server/tsconfig.json\"\" \"nodemon dist/server/index.js\"",
     "start:prod": "npm run build && node dist/server/index.js",
     "webpack": "./node_modules/.bin/webpack"
   },
