@@ -4,8 +4,8 @@ import { userController } from '../controllers/user.controller'
 
 const router : express.Router = express.Router();
 
-router.route('/users/:id')
-	.get(userController.updateUser.bind(userController));
+router.route('/users/:first_name')
+	.get(userController.putUser.bind(userController));
 
 //... other paths
 
