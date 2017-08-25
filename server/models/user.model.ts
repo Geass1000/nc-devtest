@@ -1,24 +1,46 @@
+import * as PDFDocument from 'pdfkit';
 import { Pool } from 'mysql2/promise';
 import { PoolConnection } from 'mysql2/promise';
 
+/* Configs */
 import { mysqlPool } from '../config/mysql.database';
 import { logger } from '../config/logger.config';
 
+/* Libs */
+import { AppError } from '../lib/app-error.class';
+
+/* Interfaces */
 import { IUser } from '../interfaces/user.interface';
+
 export class UserModel {
+
+	/**
+	 * constructor
+	 *
+	 * @param {Pool} pool - the pool connection to MySQL DB
+	 */
 	constructor (private pool : Pool) {
 	}
 
-	findUser (firstName : string) : Promise<any> {
+
+	/**
+	 * Method find user in the MySQL DB
+	 *
+	 * @param {string} firstName - user first name
+	 * @return {Promise<IUser>} - obj with user info
+	 */
+	findUser (firstName : string) : Promise<IUser> {
+		const methodName : string = 'findUser';
+
 		let poolConn : PoolConnection;
 		return this.pool.getConnection()
 			.then((conn) => {
-				logger.info(`${this.constructor.name} - findUser:`, 'Phase 1');
+				logger.info(`${this.constructor.name} - ${methodName}:`, 'Phase 1');
 				poolConn = conn;
 				return poolConn.query(`SELECT * FROM user WHERE firstName = '${firstName}'`);
 			})
 			.then((result) => {
-				logger.info(`${this.constructor.name} - findUser:`, 'Phase 2');
+				logger.info(`${this.constructor.name} - ${methodName}:`, 'Phase 2');
 				poolConn.release();
 
 				if (result[0][0]) {
@@ -29,17 +51,22 @@ export class UserModel {
 			});
 	}
 
+	/**
+	 * Method generate PDF file for the "user"
+	 *
+	 * @param {IUser} user - obj with user info
+	 * @return {Promise<Buffer>} - buffer with the pdf file
+	 */
 	generatePDF (user : IUser) : Promise<Buffer> {
 		return new Promise((resolve, reject) => {
 			const doc : PDFKit.PDFDocument = new PDFDocument();
 
-			let body : string = '';
+			let body : Buffer = new Buffer(0);
 			doc.on('data', (chunk) => {
-				body += chunk.toString();
+				body = Buffer.concat([body, chunk]);
 			});
 			doc.on('end', () => {
-				const buff : Buffer = Buffer.from(body);
-				resolve(buff);
+				resolve(body);
 			});
 			doc.on('error', (error : Error) => {
 				logger.error(`${error.name} - ${error.message}`);
@@ -86,3 +113,5 @@ export class UserModel {
 			});
 	}
 }
+
+export const userModel = new UserModel(mysqlPool);
