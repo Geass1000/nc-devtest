@@ -47,8 +47,30 @@ export class UserModel {
 		});
 	}
 
-	updateUser (firstName : string) : Promise<any> {
-		/* `UPDATE user SET  WHERE firstName = '${firstName}'` */
-		return Promise.resolve(null);
+	/**
+	 * Method update "pdf" field in the MySQL DB for user with first name equal the "firstName"
+	 *
+	 * @param {string} firstName - user first name
+	 * @param {Buffer} pdf - buffer with the pdf file
+	 * @return {Promise<void>}
+	 */
+	updateUserPDF (firstName : string, pdf : Buffer) : Promise<void> {
+		const methodName : string = 'updateUser';
+
+		const values : any = {
+			pdf : pdf
+		};
+
+		let poolConn : PoolConnection;
+		return this.pool.getConnection()
+			.then((conn) => {
+				logger.info(`${this.constructor.name} - ${methodName}:`, 'Phase 1');
+				poolConn = conn;
+				return poolConn.query(`UPDATE user SET ? WHERE firstName = '${firstName}'`, values);
+			})
+			.then((result) => {
+				logger.info(`${this.constructor.name} - ${methodName}:`, 'Phase 2');
+				poolConn.release();
+			});
 	}
 }
