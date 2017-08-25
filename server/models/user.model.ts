@@ -69,7 +69,6 @@ export class UserModel {
 				resolve(body);
 			});
 			doc.on('error', (error : Error) => {
-				logger.error(`${error.name} - ${error.message}`);
 				reject(error);
 			});
 
