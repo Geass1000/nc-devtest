@@ -22,7 +22,6 @@ export class UserModel {
 	constructor (private pool : Pool) {
 	}
 
-
 	/**
 	 * Method find user in the MySQL DB
 	 *
