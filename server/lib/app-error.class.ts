@@ -4,11 +4,10 @@ export class AppError extends Error {
 	public code : string;
 	public statusCode : number;
 
-	constructor (code : string, statusCode : number) {
-		super();
+	constructor (statusCode ?: number, message ?: string) {
+		super(message);
 
 		this.name = 'AppError';
-		this.code = code;
 		this.statusCode = statusCode || 500;
 	}
 }
