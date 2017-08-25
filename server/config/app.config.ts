@@ -23,14 +23,6 @@ config.express = {
 };
 
 //... database
-// MongoDB
-config.mongodb = {
-	username : process.env.MONGODB_USERNAME,
-	password : process.env.MONGODB_PASSWORD,
-	host : process.env.MONGODB_HOST,
-	port : Helper.isNumber(process.env.MONGODB_PORT, 27017, 0),
-	database : process.env.MONGODB_DATABASE
-};
 // MySQL
 config.mysql = {
 	connectionLimit : Helper.isNumber(process.env.MYSQL_CLIMIT, 10, 1),
