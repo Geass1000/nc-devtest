@@ -4,8 +4,8 @@ import { userController } from '../controllers/user.controller'
 
 const router : express.Router = express.Router();
 
-router.route('/users/:first_name')
-	.get(userController.putUser.bind(userController));
+router.route('/user/:first_name')
+	.get(userController.getUpdateUserPDF.bind(userController));
 
 //... other paths
 
