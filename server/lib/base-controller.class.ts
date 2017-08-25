@@ -34,13 +34,16 @@ export class BaseController {
 	 *
 	 * @param {express.Response} resp - express response object
 	 * @param {Object} error - any Error object
+	 * @param {Object} data - any payload
 	 * @param {string} methodName - sender method name
+	 * @param {string} message - logging message
 	 * @return {void}
 	 */
-	sendErrorResponse (resp : express.Response, error : any,
+	sendErrorResponse (resp : express.Response, error : any, data : any,
 										 methodName : string, message : string) : void {
 		const statusCode = error.statusCode ? error.statusCode : 500;
 		this.logger.error(`${this.constructor.name} - ${methodName}:`, `${statusCode} -`, message);
-		resp.status(statusCode).json({ 'error' : message });
+		const result : any = Object.assign({ error : message }, data);
+		resp.status(statusCode).json(result);
 	}
 }
