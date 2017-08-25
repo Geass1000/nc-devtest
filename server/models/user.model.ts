@@ -20,7 +20,12 @@ export class UserModel {
 			.then((result) => {
 				logger.info(`${this.constructor.name} - findUser:`, 'Phase 2');
 				poolConn.release();
-				return result[0][0];
+
+				if (result[0][0]) {
+					return <IUser>result[0][0];
+				} else {
+					throw new AppError(null, 'User not found');
+				}
 			});
 	}
 
