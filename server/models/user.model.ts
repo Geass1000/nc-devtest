@@ -43,6 +43,13 @@ export class UserModel {
 
 			doc.text(`First Name: ${user.firstName}`);
 			doc.text(`Last Name: ${user.lastName}`);
+			try {
+				doc.image(new Buffer(user.image));
+			} catch (error) {
+				logger.error(error);
+				reject(error); // Delete this row, if image isn't important
+			}
+
 			doc.end();
 		});
 	}
