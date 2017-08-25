@@ -1,10 +1,26 @@
+import * as express from 'express';
+
+/* Configs */
+import { logger } from '../config/logger.config';
+
+/* Libs */
 import { BaseController } from '../lib/base-controller.class';
+
+/* Models */
+import { userModel } from '../models/user.model';
 
 export class UserController extends BaseController {
 	constructor () {
 		super();
 	}
 
+	/**
+	 * Controller generate new PDF file for user with "first name" from route param
+	 *
+	 * @param {Request} req - request object
+	 * @param {Response} res - response object
+	 * @return {void}
+	 */
 	getUpdateUserPDF (req : express.Request, res : express.Response) : void {
 		const methodName : string = 'getUpdateUserPDF';
 		let message : string;
